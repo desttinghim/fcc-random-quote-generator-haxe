@@ -1,18 +1,18 @@
 (function (console, $hx_exports) { "use strict";
 var Index = $hx_exports.Index = function() { };
 Index.main = function() {
-	window.document.onload = function() {
-		Index.newQuote();
-	};
+	Index.newQuote();
 };
 Index.getElement = function(element) {
 	return window.document.getElementById(element);
 };
+Index.jsonp = function() {
+};
 Index.newQuote = function() {
 	$.ajax({
-            url: "http://api.forismatic.com/api/1.0/?method=getQuote&format=jsonp&jsonp=parseQuote&lang=en",
+            url: "http://api.forismatic.com/api/1.0/?method=getQuote&format=jsonp&jsonp=Index.parseQuote&lang=en",
             dataType: "jsonp",
-            callback: this.parseQuote
+            callback: Index.parseQuote
         });
 };
 Index.parseQuote = function(response) {
@@ -25,13 +25,19 @@ Index.parseQuote = function(response) {
 };
 Index.tweetQuote = function() {
 	var url = "https://twitter.com/intent/tweet?text=";
-	url += "\"" + Index.getElement("#quote").innerHTML + "\"";
-	url += "  -" + Index.getElement("#author").innerHTML;
+	url += "\"" + Index.getElement("quote").innerHTML + "\"";
+	url += "  -" + Index.getElement("author").innerHTML;
 	url = encodeURI(url);
-	Index.getElement("#twitter").setAttribute("href",url);
+	Index.getElement("twitter").setAttribute("href",url);
 };
 var q = window.jQuery;
 var js = js || {}
 js.JQuery = q;
+Index.jsonpScript = (function($this) {
+	var $r;
+	var _this = window.document;
+	$r = _this.createElement("script");
+	return $r;
+}(this));
 Index.main();
 })(typeof console != "undefined" ? console : {log:function(){}}, typeof window != "undefined" ? window : exports);

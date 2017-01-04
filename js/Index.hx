@@ -3,22 +3,27 @@ import js.Browser;
 
 @:expose class Index {
 
+    private static var jsonpScript = Browser.document.createScriptElement();
+
     public static function main() {
-        Browser.document.onload = function() {
-            Index.newQuote();
-        };
+        Index.newQuote();
     }
 
     public static function getElement(element:String) {
         return Browser.document.getElementById(element);
     }
 
+    public static function jsonp() {
+
+    }
+
     public static function newQuote() {
         untyped __js__('$.ajax({
-            url: "http://api.forismatic.com/api/1.0/?method=getQuote&format=jsonp&jsonp=parseQuote&lang=en",
+            url: "http://api.forismatic.com/api/1.0/?method=getQuote&format=jsonp&jsonp=Index.parseQuote&lang=en",
             dataType: "jsonp",
-            callback: this.parseQuote
+            callback: Index.parseQuote
         })');
+        // jsonpScript.src = "http://api.forismatic.com/api/1.0/?method=getQuote&format=jsonp&jsonp=Index.parseQuote&lang=en";
     }
 
     public static function parseQuote(response) {
@@ -36,9 +41,9 @@ import js.Browser;
 
     public static function tweetQuote() {
         var url : String = "https://twitter.com/intent/tweet?text=";
-        url += '"' + getElement("#quote").innerHTML + '"';
-        url += "  -" + getElement("#author").innerHTML;
+        url += '"' + getElement("quote").innerHTML + '"';
+        url += "  -" + getElement("author").innerHTML;
         url = untyped __js__('encodeURI(url)');
-        getElement("#twitter").setAttribute("href", url);
+        getElement("twitter").setAttribute("href", url);
     }
 }
