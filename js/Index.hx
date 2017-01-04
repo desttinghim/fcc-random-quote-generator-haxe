@@ -1,40 +1,44 @@
 import js.JQuery;
 import js.Browser;
 
-@:expose
-class Index {
-    private static var document = Browser.document;
+@:expose class Index {
 
     public static function main() {
-        trace("HAXE.");
+        Browser.document.onload = function() {
+            Index.newQuote();
+        };
     }
 
-    function newQuote() {
+    public static function getElement(element:String) {
+        return Browser.document.getElementById(element);
+    }
+
+    public static function newQuote() {
         untyped __js__('$.ajax({
             url: "http://api.forismatic.com/api/1.0/?method=getQuote&format=jsonp&jsonp=parseQuote&lang=en",
             dataType: "jsonp",
-            callback: parseQuote
-        });');
+            callback: this.parseQuote
+        })');
     }
 
-    function parseQuote(response) {
+    public static function parseQuote(response) {
         if (response == null) return;
-        document.getElementById("quote").innerHTML = response.quoteText;
+        getElement("quote").innerHTML = response.quoteText;
         var author = "";
         if (response.quoteAuthor == "") {
             author = "Unknown";
         } else {
             author = response.quoteAuthor;
         }
-        document.getElementById("author").innerHTML = author;
+        getElement("author").innerHTML = author;
         tweetQuote();
     }
 
-    function tweetQuote() {
+    public static function tweetQuote() {
         var url : String = "https://twitter.com/intent/tweet?text=";
-        url += '"' + new JQuery("#quote").html() + '"';
-        url += "  -" + new JQuery("#author").html();
+        url += '"' + getElement("#quote").innerHTML + '"';
+        url += "  -" + getElement("#author").innerHTML;
         url = untyped __js__('encodeURI(url)');
-        new JQuery("#twitter").attr("href", url);
+        getElement("#twitter").setAttribute("href", url);
     }
 }
