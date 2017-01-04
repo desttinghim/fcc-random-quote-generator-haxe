@@ -30,8 +30,5 @@ Index.tweetQuote = function() {
 	url = encodeURI(url);
 	Index.getElement("twitter").setAttribute("href",url);
 };
-var q = window.jQuery;
-var js = js || {}
-js.JQuery = q;
 Index.main();
 })(typeof console != "undefined" ? console : {log:function(){}}, typeof window != "undefined" ? window : exports);

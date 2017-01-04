@@ -1,4 +1,3 @@
-import js.JQuery;
 import js.Browser;
 
 @:expose class Index {
