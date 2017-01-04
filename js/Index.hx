@@ -11,11 +11,13 @@ import js.Browser;
         return Browser.document.getElementById(element);
     }
 
-    public static function jsonp() {
-
-    }
-
     public static function newQuote() {
+        // Clean up old requests...
+        if (getElement("jsonp") != null) {
+            getElement("jsonp").remove();
+        }
+
+        // Create a new script element to run
         var script = Browser.document.createScriptElement();
         // Website/API to access
         script.src = "http://api.forismatic.com/api/1.0/"
@@ -23,7 +25,8 @@ import js.Browser;
                    + "&format=jsonp"
                    + "&jsonp=Index.parseQuote"
                    + "&lang=en";
-
+        script.id = "jsonp";
+        // Add the script element to head
         Browser.document.head.appendChild(script);
     }
 

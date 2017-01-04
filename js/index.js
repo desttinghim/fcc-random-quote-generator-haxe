@@ -6,13 +6,13 @@ Index.main = function() {
 Index.getElement = function(element) {
 	return window.document.getElementById(element);
 };
-Index.jsonp = function() {
-};
 Index.newQuote = function() {
+	if(Index.getElement("jsonp") != null) Index.getElement("jsonp").remove();
 	var script;
 	var _this = window.document;
 	script = _this.createElement("script");
 	script.src = "http://api.forismatic.com/api/1.0/" + "?method=getQuote" + "&format=jsonp" + "&jsonp=Index.parseQuote" + "&lang=en";
+	script.id = "jsonp";
 	window.document.head.appendChild(script);
 };
 Index.parseQuote = function(response) {
