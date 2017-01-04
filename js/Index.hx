@@ -3,8 +3,6 @@ import js.Browser;
 
 @:expose class Index {
 
-    private static var jsonpScript = Browser.document.createScriptElement();
-
     public static function main() {
         Index.newQuote();
     }
@@ -18,12 +16,15 @@ import js.Browser;
     }
 
     public static function newQuote() {
-        untyped __js__('$.ajax({
-            url: "http://api.forismatic.com/api/1.0/?method=getQuote&format=jsonp&jsonp=Index.parseQuote&lang=en",
-            dataType: "jsonp",
-            callback: Index.parseQuote
-        })');
-        // jsonpScript.src = "http://api.forismatic.com/api/1.0/?method=getQuote&format=jsonp&jsonp=Index.parseQuote&lang=en";
+        var script = Browser.document.createScriptElement();
+        // Website/API to access
+        script.src = "http://api.forismatic.com/api/1.0/"
+                   + "?method=getQuote"
+                   + "&format=jsonp"
+                   + "&jsonp=Index.parseQuote"
+                   + "&lang=en";
+
+        Browser.document.head.appendChild(script);
     }
 
     public static function parseQuote(response) {

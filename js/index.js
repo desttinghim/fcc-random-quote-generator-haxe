@@ -9,11 +9,11 @@ Index.getElement = function(element) {
 Index.jsonp = function() {
 };
 Index.newQuote = function() {
-	$.ajax({
-            url: "http://api.forismatic.com/api/1.0/?method=getQuote&format=jsonp&jsonp=Index.parseQuote&lang=en",
-            dataType: "jsonp",
-            callback: Index.parseQuote
-        });
+	var script;
+	var _this = window.document;
+	script = _this.createElement("script");
+	script.src = "http://api.forismatic.com/api/1.0/" + "?method=getQuote" + "&format=jsonp" + "&jsonp=Index.parseQuote" + "&lang=en";
+	window.document.head.appendChild(script);
 };
 Index.parseQuote = function(response) {
 	if(response == null) return;
@@ -33,11 +33,5 @@ Index.tweetQuote = function() {
 var q = window.jQuery;
 var js = js || {}
 js.JQuery = q;
-Index.jsonpScript = (function($this) {
-	var $r;
-	var _this = window.document;
-	$r = _this.createElement("script");
-	return $r;
-}(this));
 Index.main();
 })(typeof console != "undefined" ? console : {log:function(){}}, typeof window != "undefined" ? window : exports);
