@@ -1,0 +1,31 @@
+body {
+  background-color: #000;
+}
+
+#quote-machine {
+  max-width: 640px;
+  min-height: 100px;
+  margin: 50px auto;
+  background-color: #333;
+  color: #eee;
+  padding: 1em;
+  border-radius: .5em;
+}
+
+#quote {
+  width: 620px;
+  font-size: xx-large;
+}
+
+#author-container {
+  font-size: large;
+  text-align: right;
+}
+
+#new-quote {
+  width: 100%;
+}
+
+.twitter-share-button {
+  width: 100%;
+}
